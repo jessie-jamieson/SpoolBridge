@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: spoolease-spoolman-bridge
+Version: 0.1.0
+Summary: Bidirectional sync bridge between SpoolEase (Bambu) and Spoolman (Klipper) filament tracking
+Requires-Python: >=3.11
+Requires-Dist: aiohttp<4,>=3.9
+Requires-Dist: cryptography<44,>=42.0
+Provides-Extra: dev
+Requires-Dist: pytest>=8.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.23; extra == "dev"
+Requires-Dist: aioresponses>=0.7; extra == "dev"
+Requires-Dist: pytest-cov>=5.0; extra == "dev"

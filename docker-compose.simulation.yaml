@@ -1,0 +1,61 @@
+# Full integration test: Spoolman + Mock SpoolEase + Bridge
+#
+# Usage:
+#   docker compose -f docker-compose.simulation.yaml up --build
+#
+# Then run the scenario script:
+#   python -m simulation.run_scenario
+#
+# Or interact manually:
+#   curl http://localhost:8081/admin/spools                              # list mock spools
+#   curl -X POST http://localhost:8081/admin/spools -H 'Content-Type: application/json' \
+#        -d '{"tag_id":"04AABBCCDDEE01","material_type":"PLA","brand":"Bambu","color_name":"Red"}'
+#   curl -X POST http://localhost:8081/admin/consume -H 'Content-Type: application/json' \
+#        -d '{"spool_id":"1","grams":25.0}'
+#   curl http://localhost:7912/api/v1/spool                             # check Spoolman
+
+services:
+  spoolman:
+    image: ghcr.io/donkie/spoolman:latest
+    container_name: sim-spoolman
+    ports:
+      - "7912:8000"
+    volumes:
+      - sim-spoolman-data:/home/app/.local/share/spoolman
+    environment:
+      - TZ=America/New_York
+
+  mock-spoolease:
+    build:
+      context: .
+      dockerfile: simulation/Dockerfile.mock
+    container_name: sim-mock-spoolease
+    ports:
+      - "8080:8080"   # encrypted API (bridge connects here)
+      - "8081:8081"   # admin API (you control from host)
+    environment:
+      - MOCK_SECURITY_KEY=TESTKEY
+      - MOCK_PORT=8080
+      - MOCK_ADMIN_PORT=8081
+
+  bridge:
+    build: .
+    container_name: sim-bridge
+    depends_on:
+      - spoolman
+      - mock-spoolease
+    volumes:
+      - sim-bridge-data:/data
+    environment:
+      - BRIDGE_SPOOLEASE_HOST=mock-spoolease
+      - BRIDGE_SPOOLEASE_PORT=8080
+      - BRIDGE_SPOOLEASE_SECURITY_KEY=TESTKEY
+      - BRIDGE_SPOOLMAN_HOST=spoolman
+      - BRIDGE_SPOOLMAN_PORT=8000
+      - BRIDGE_POLL_INTERVAL_SECONDS=10
+      - BRIDGE_INITIAL_SYNC_DELAY=5
+      - BRIDGE_LOG_LEVEL=DEBUG
+
+volumes:
+  sim-spoolman-data:
+  sim-bridge-data:

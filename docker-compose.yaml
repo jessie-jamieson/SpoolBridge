@@ -1,0 +1,33 @@
+services:
+  spoolman:
+    image: ghcr.io/donkie/spoolman:latest
+    container_name: spoolman
+    restart: unless-stopped
+    ports:
+      - "7912:8000"
+    volumes:
+      - spoolman-data:/home/app/.local/share/spoolman
+    environment:
+      - TZ=America/New_York  # Adjust to your timezone
+
+  spoolease-bridge:
+    build: .
+    container_name: spoolease-bridge
+    restart: unless-stopped
+    depends_on:
+      - spoolman
+    volumes:
+      - bridge-data:/data
+    environment:
+      # === REQUIRED: Set these to your values ===
+      - BRIDGE_SPOOLEASE_HOST=192.168.1.50        # Your SpoolEase device IP
+      - BRIDGE_SPOOLEASE_SECURITY_KEY=ABCDEFG     # Your 7-char security key
+      # === Defaults (usually fine as-is) ===
+      - BRIDGE_SPOOLMAN_HOST=spoolman
+      - BRIDGE_SPOOLMAN_PORT=8000
+      - BRIDGE_POLL_INTERVAL_SECONDS=30
+      - BRIDGE_LOG_LEVEL=INFO
+
+volumes:
+  spoolman-data:
+  bridge-data:
