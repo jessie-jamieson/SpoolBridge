@@ -142,6 +142,9 @@ source venv/bin/activate   # On Windows: venv\Scripts\activate
 # Install the bridge and its dependencies
 pip install -e .
 
+# Or install from requirements.txt
+pip install -r requirements.txt
+
 # Or include dev/test dependencies too
 pip install -e ".[dev]"
 ```
@@ -243,7 +246,10 @@ spoolease-spoolman-bridge/
 ├── docker-compose.simulation.yaml  # Integration test environment
 ├── Dockerfile               # Bridge container image
 ├── pyproject.toml           # Python project metadata and dependencies
-└── .env.example             # Environment variable template
+├── requirements.txt         # Pip-installable dependency list
+├── .env.example             # Environment variable template
+├── .gitignore               # Git ignore rules
+└── LICENSE                  # MIT License
 ```
 
 ## Testing
@@ -329,4 +335,4 @@ The bridge automatically recovers mappings from Spoolman's extra fields on start
 
 ## License
 
-This project is not yet licensed. See [LICENSE](LICENSE) for details once a license is chosen.
+This project is licensed under the [MIT License](LICENSE).
