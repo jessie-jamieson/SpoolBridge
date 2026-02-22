@@ -7,8 +7,8 @@ If you use both Bambu Lab and Klipper printers, this bridge gives you a single, 
 ## How It Works
 
 ```
-┌──────────────┐     poll every 30s      ┌─────────────────────┐     REST API      ┌──────────────┐
-│              │ ◄────────────────────────│                     │ ──────────────────►│              │
+┌──────────────┐     poll every 30s      ┌─────────────────────┐     REST API       ┌──────────────┐
+│              │ ◄───────────────────────│                     │ ──────────────────►│              │
 │   SpoolEase  │   encrypted REST API    │   SpoolEase-Spoolman│                    │   Spoolman   │
 │   (ESP32)    │                         │       Bridge        │ ◄──────────────────│   (Klipper)  │
 │              │                         │                     │   WebSocket events │              │
