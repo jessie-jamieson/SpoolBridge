@@ -1,5 +1,5 @@
 [project]
-name = "spoolease-spoolman-bridge"
+name = "spoolbridge"
 version = "0.1.0"
 description = "Bidirectional sync bridge between SpoolEase (Bambu) and Spoolman (Klipper) filament tracking"
 requires-python = ">=3.11"

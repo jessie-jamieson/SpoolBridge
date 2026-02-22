@@ -1,4 +1,4 @@
-# SpoolEase-Spoolman Bridge
+# SpoolBridge
 
 A bidirectional sync service that bridges filament tracking between **SpoolEase** (Bambu Lab's ESP32-S3 NFC spool tracker) and **Spoolman** (the Klipper ecosystem's filament management system).
 
@@ -45,8 +45,8 @@ This is the recommended way to run the bridge. It starts both Spoolman and the b
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/spoolease-spoolman-bridge.git
-cd spoolease-spoolman-bridge
+git clone https://github.com/jessie-jamieson/SpoolBridge.git
+cd SpoolBridge
 ```
 
 ### 2. Configure your environment
@@ -132,8 +132,8 @@ curl http://localhost:8000/api/v1/health
 Requires **Python 3.11+**.
 
 ```bash
-git clone https://github.com/your-username/spoolease-spoolman-bridge.git
-cd spoolease-spoolman-bridge
+git clone https://github.com/jessie-jamieson/SpoolBridge.git
+cd SpoolBridge
 
 # Create and activate a virtual environment (recommended)
 python3 -m venv venv
@@ -197,9 +197,9 @@ After=network.target
 [Service]
 Type=simple
 User=your-username
-WorkingDirectory=/path/to/spoolease-spoolman-bridge
-EnvironmentFile=/path/to/spoolease-spoolman-bridge/.env
-ExecStart=/path/to/spoolease-spoolman-bridge/venv/bin/python -m src.main
+WorkingDirectory=/path/to/SpoolBridge
+EnvironmentFile=/path/to/SpoolBridge/.env
+ExecStart=/path/to/SpoolBridge/venv/bin/python -m src.main
 Restart=on-failure
 RestartSec=10
 
@@ -223,7 +223,7 @@ If you already have Spoolman running, you can run just the bridge and point it a
 ## Project Structure
 
 ```
-spoolease-spoolman-bridge/
+SpoolBridge/
 ├── src/
 │   ├── main.py              # Entry point — startup, validation, sync orchestration
 │   ├── config.py            # Environment variable loading and configuration
